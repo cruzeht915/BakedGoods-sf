@@ -1,10 +1,10 @@
 import mongoose, {Schema, model, models} from "mongoose";
 
 const ProductSchema = new Schema({
-    name : {type: String, require: true},
-    price : {type: Number, require: true},
-    maxQuantityPerDay: {type: Number, require: true},
-    quantityAvailable: {type: Number, require: true},
+    name : {type: String, required: true},
+    price : {type: Number, required: true},
+    maxQuantityPerDay: {type: Number, required: true},
+    quantityAvailable: {type: Number, required: true},
     description: {type: String},
     imageURL: {type: String}
 })
