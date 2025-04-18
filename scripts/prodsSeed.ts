@@ -5,28 +5,28 @@ import 'dotenv/config'
 
 const seedProducts = [
   {
-    name: 'Chocolate Chip Cookie',
-    price: 2.5,
-    maxQuantityPerDay: 50,
-    quantityAvailable: 50,
-    description: 'Soft, chewy, and packed with chocolate chips.',
-    imageUrl: '',
+    name: 'Southern Belle Velvet (half dozen)',
+    price: 15,
+    maxQuantityPerDay: 4,
+    quantityAvailable: 4,
+    description: 'Soft, moist, with a velvety cream cheese frosting',
+    imageURL: '/images/redVelvet.jpg',
   },
   {
-    name: 'Blueberry Muffin',
-    price: 3.0,
-    maxQuantityPerDay: 30,
-    quantityAvailable: 30,
-    description: 'Moist muffin filled with fresh blueberries.',
-    imageUrl: '',
+    name: 'Pastéis de nata (Protugese Custard Tart, half dozen)',
+    price: 12,
+    maxQuantityPerDay: 8,
+    quantityAvailable: 8,
+    description: 'Crunchy outter pastry filled with creamy custard center',
+    imageURL: '/images/pasteisDN.jpg',
   },
   {
-    name: 'Banana Bread Slice',
+    name: 'Pear Tarte Tatin',
     price: 2.0,
     maxQuantityPerDay: 40,
     quantityAvailable: 40,
-    description: 'Deliciously moist banana bread with a hint of cinnamon.',
-    imageUrl: '',
+    description: 'Falky puff pastry crust with deliciously caramelized and spiced pear topping',
+    imageURL: '/images/pearTT.jpg',
   },
 ]
 
