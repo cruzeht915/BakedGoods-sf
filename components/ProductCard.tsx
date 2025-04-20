@@ -1,6 +1,7 @@
 'use client'
 
 import { useCart } from '@/context/CartContext'
+import Image from 'next/image'
 
 type ProductProps = {
     productId: string
@@ -24,17 +25,26 @@ export default function ProductCard(props: ProductProps) {
     }
     
     return (
-        <div className="border border-red-500 bg-red-300 rounded-md shadow-sm p-4 big-white">
+        <div className="border border-gray-300 bg-foreground p-4 m-4 rounded-lg shadow-md hover:shadow-lg transition">
             {props.imageURL && (
-            <img src={props.imageURL} alt={props.name} className="w-full h-40 object-cover rounded"/>
+            <div className="w-full mb-2">
+                <Image
+                src={props.imageURL}
+                alt={props.name}
+                width={300} 
+                height={200}
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                />
+            </div>
             )}
-            <h2 className="text-lg font-semibold mt-2">{props.name}</h2>
-            <p className="text-sm text-gray-600">{props.description}</p>
+            <h2 className="text-lg text-background font-semibold mt-2">{props.name}</h2>
+            <p className="text-sm text-background">{props.description}</p>
             <div className="flex justify-between items-center mt-2">
-                <span className="font-bold">${props.price.toFixed(2)}</span>
+                <span className="font-bold text-background">${props.price.toFixed(2)}</span>
                 <button 
                     onClick={handleAdd}
-                    className="bg-blue-600 text-white text-sm px-3 py-1 rounded"
+                    className="bg-orange-500 text-white text-sm px-3 py-1 rounded hover:shadow-md transition"
                 >
                     Add to Cart
                 </button>
