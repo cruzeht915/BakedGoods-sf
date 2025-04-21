@@ -7,6 +7,19 @@ export default function CartPage() {
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
+    const handleCheckout = async () => {
+        const res = await fetch('/api/checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: cart }),
+        })
+
+        const data = await res.json()
+        if (data?.url) {
+            window.location.href = data.url // Redirect to Stripe Checkout
+        }
+    }
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
@@ -46,7 +59,7 @@ export default function CartPage() {
                             Clear Cart
                         </button>
                         <button
-                            onClick={() => alert('Checkout soon!')}
+                            onClick={handleCheckout}
                             className="px-4 py-2 bg-green-600 text-white rounded"
                         >
                             Checkout
