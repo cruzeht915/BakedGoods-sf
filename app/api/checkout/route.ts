@@ -25,7 +25,7 @@ export async function POST(req: Request) {
             metadata: {
                 items: JSON.stringify(body.items),
                 email: body.email || 'guest@example.com',
-                pickupDate: body.pickupDate || new Date().toISOString()
+                pickupDate: body.pickupDate
             },
             success_url: 'http://localhost:3000/success',
             cancel_url: 'http://localhost:3000/cart',
