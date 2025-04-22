@@ -9,7 +9,6 @@ type ProductProps = {
     price: number,
     description: string,
     imageURL?: string,
-    quantityAvailable: number
 }
 
 export default function ProductCard(props: ProductProps) {

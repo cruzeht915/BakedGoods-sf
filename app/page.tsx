@@ -17,7 +17,6 @@ export default async function Home() {
           price= {product.price}
           description= {product.description}
           imageURL= {product.imageURL}
-          quantityAvailable= {product.quantityAvailable}
         />
       ))}
     </main>
