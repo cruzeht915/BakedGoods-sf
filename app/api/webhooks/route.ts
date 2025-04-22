@@ -1,17 +1,11 @@
+import { Types } from "mongoose";
 import { NextRequest } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { connectToDB } from "@/lib/mongodb";
 import Order from "@/models/Order";
-import Product from "@/models/Product";
+import Inventory from "@/models/Inventory";
 import dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
-
-// Disable automatic body parsing (needed for Stripe signature validation)
-export const config = {
-    api: {
-        bodyParser: false,
-    }
-}
 
 const endpoint = process.env.STRIPE_WEBHOOK_SECRET!
 
@@ -42,15 +36,16 @@ export async function POST(req: NextRequest) {
         const total = session.amount_total!/100
 
         const productUpdates = items.map(async (item: any) => {
-            await Product.findByIdAndUpdate(item.productId, {
-                $inc: {quantityAvailable: -item.quantity}
-            })
+            await Inventory.findOneAndUpdate(
+                { product: new Types.ObjectId(item.productId), date: pickupDate },
+                { $inc: { quantityAvailable: -item.quantity } }
+            )
         })
 
         await Promise.all(productUpdates)
 
         await Order.create({
-            user: userEmail,
+            user: null,
             items: items.map((item:any) => ({
                 product: item.productId,
                 quantity: item.quantity
@@ -62,6 +57,6 @@ export async function POST(req: NextRequest) {
         })
 
         console.log('✅ Order saved and inventory updated')
-        return new Response('Webhook received', { status: 200 })
     }
+    return new Response('Webhook received', { status: 200 })
 }
