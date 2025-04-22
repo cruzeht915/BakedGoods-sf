@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Baked Goods Storefront
 
-## Getting Started
+A full-stack e-commerce app for ordering baked goods with per-day inventory limits, advance pickup scheduling, and Stripe Checkout integration.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- 🛒 Add-to-cart with real-time quantity tracking
+- 📅 Calendar-based pickup date selection (up to 2 months ahead)
+- 📦 Per-item daily inventory enforcement
+- 💳 Secure payments via Stripe Checkout
+- 📈 Inventory auto-generation for future days
+- 🔐 User account support (optional)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend:** Next.js (App Router) + React + Tailwind CSS
+- **Backend:** Next.js API Routes + MongoDB (via Mongoose)
+- **Payments:** Stripe Checkout + Webhooks
+- **Database Models:** Product, Order, Inventory
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/your-username/baked-storefront.git
+   cd baked-storefront
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Add your environment variables in `.env.local`:
+   ```env
+   MONGODB_URI=your_mongo_uri
+   STRIPE_SECRET_KEY=sk_live_...
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+   STRIPE_WEBHOOK_SECRET=whsec_...
+   NEXTAUTH_SECRET=some_random_secret
+   ```
 
-## Deploy on Vercel
+4. Seed products:
+   ```bash
+   npx tsx scripts/seed.ts
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Seed inventory for the next 60 days:
+   ```bash
+   npx tsx scripts/seedInventory.ts
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+6. Run the app:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🌐 Deployment
+
+Use [Vercel](https://vercel.com/) to deploy the app and set the same `.env` variables in the Vercel dashboard under **Project Settings > Environment Variables**.
+
+---
+
+## Webhooks (Live)
+
+To handle Stripe webhooks in production:
+1. Deploy the app
+2. Add a webhook in your Stripe dashboard
+3. Use the live webhook secret in `.env.local` and Vercel
+
+---
+
+## Testing Live Checkout
+
+- Switch Stripe to live mode
+- Use real payment details
+- Orders reduce the selected day's inventory automatically
+
+---
+
+## Future Improvements
+
+- Admin dashboard for editing inventory
+- Email confirmations
+- Persistent cart via localStorage or backend
+- Auth system with order history
+
+---
+
+## License
+
+MIT
+
