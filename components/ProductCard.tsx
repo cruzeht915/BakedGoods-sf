@@ -8,7 +8,7 @@ type ProductProps = {
     name: string,
     price: number,
     description: string,
-    imageURL?: string,
+    imageURL?: string|null,
 }
 
 export default function ProductCard(props: ProductProps) {
