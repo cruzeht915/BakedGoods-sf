@@ -1,4 +1,5 @@
 import mongoose, {Schema, model, models} from "mongoose";
+import { ProductType } from "./Product";
 
 const InventorySchema = new Schema({
     product: {type: Schema.Types.ObjectId, ref: 'Product', required: true},
@@ -12,3 +13,10 @@ InventorySchema.index({product: 1, date: 1}, {unique: true})
 const Inventory = models.Inventory || model("Inventory", InventorySchema)
 
 export default Inventory
+
+export type PopulatedInventoryItem = {
+    product: ProductType
+    date: string
+    quantityAvailable: number
+    maxQuantity: number
+  }

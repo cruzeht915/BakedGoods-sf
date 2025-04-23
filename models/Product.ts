@@ -1,4 +1,5 @@
 import mongoose, {Schema, model, models, InferSchemaType} from "mongoose";
+import { Types } from "mongoose";
 
 const ProductSchema = new Schema({
     name : {type: String, required: true},
@@ -12,4 +13,4 @@ const Product = models.Product || model("Product", ProductSchema)
 
 export default Product
 
-export type ProductType = InferSchemaType<typeof ProductSchema>
+export type ProductType = InferSchemaType<typeof ProductSchema> & { _id: Types.ObjectId }

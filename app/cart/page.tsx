@@ -2,37 +2,20 @@
 
 import { useCart } from "@/context/CartContext"
 import { useState, useEffect } from "react"
-import { ProductType } from "@/models/Product"
-import { Types } from "mongoose"
-
-type PopulatedInventoryItem = {
-    product: ProductType & { _id: Types.ObjectId }
-    date: string
-    quantityAvailable: number
-    maxQuantity: number
-  }
+import fetchInventory from "@/lib/fetchInventory"
+import { PopulatedInventoryItem } from "@/models/Inventory"
 
 export default function CartPage() {
     const {cart, removeFromCart, clearCart} = useCart()
     const [pickupDate, setPickupDate] = useState(() => {
         return new Date().toISOString().split('T')[0] // default to today
     })
-    const [inventory, setInventory] = useState<any[]>([])
+    const [inventory, setInventory] = useState<PopulatedInventoryItem[]>([])
     
     const maxDate = new Date()
     maxDate.setMonth(maxDate.getMonth() + 2)
 
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-    const fetchInventory = async (pickupDate: string)  => {
-        const res = await fetch('/api/inventory', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ date: pickupDate }),
-        })
-        return await res.json()
-        
-    }
 
     const handleCheckout = async () => {
         const inventoryForDay: PopulatedInventoryItem[] = await fetchInventory(pickupDate)

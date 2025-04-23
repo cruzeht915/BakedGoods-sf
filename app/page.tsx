@@ -1,10 +1,10 @@
 import { connectToDB } from "@/lib/mongodb";
-import Product from "@/models/Product";
+import Product, {ProductType} from "@/models/Product";
 import ProductCard from "@/components/ProductCard";
 
 export default async function Home() {
   await connectToDB()
-  const products = await Product.find().lean()
+  const products = await Product.find().lean<ProductType[]>()
 
   return(
     <main>

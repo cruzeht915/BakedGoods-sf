@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
+import { CartItem } from "@/context/CartContext";
 
 export async function POST(req: Request) {
     const body = await req.json()
@@ -12,7 +13,7 @@ export async function POST(req: Request) {
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ["card"],
             mode: "payment",
-            line_items: body.items.map((item: any) => ({
+            line_items: body.items.map((item: CartItem) => ({
                 price_data: {
                     currency: "usd",
                     product_data: {
@@ -31,7 +32,10 @@ export async function POST(req: Request) {
             cancel_url: 'http://localhost:3000/cart',
         })
         return NextResponse.json({url: session.url})
-    } catch (err: any) {
-        return NextResponse.json({error: err.message}, {status: 500})
+    } catch (err: unknown) {
+        if (err instanceof Error) {
+            return NextResponse.json({error: err.message}, {status: 500})
+        }
+        return NextResponse.json({error: "Unexpected Error"}, {status: 500})
     }
 }
