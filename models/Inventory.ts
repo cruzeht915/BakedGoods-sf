@@ -1,4 +1,5 @@
 import mongoose, {Schema, model, models} from "mongoose";
+import "./Product";
 import { ProductType } from "./Product";
 
 const InventorySchema = new Schema({
