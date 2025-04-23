@@ -1,7 +1,7 @@
 import { connectToDB } from "@/lib/mongodb";
 import Inventory from "@/models/Inventory";
 import { NextRequest, NextResponse } from "next/server";
-import { ProductType } from "@/models/Product";
+import "./Product";
 
 export async function POST(req: NextRequest) {
     const {date} = await req.json()
