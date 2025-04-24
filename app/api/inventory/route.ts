@@ -6,6 +6,7 @@ import Product from "@/models/Product";
 export async function POST(req: NextRequest) {
     const {date} = await req.json()
     await connectToDB()
+    console.log('[registering] Product model:', !!Product)
     const inventory = await Inventory.find({date}).populate('product')
     console.log('📦 populated inventory:', JSON.stringify(inventory, null, 2))
     return NextResponse.json(inventory)
